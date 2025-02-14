@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajouter un Produit</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Comic Neue', cursive;
+            background-color: #e9ecef; /* Fond clair pour le contraste */
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            position: relative; /* Nécessaire pour le positionnement de l'objet 3D */
+            overflow: hidden; /* Pour éviter les débordements */
+        }
+
+        /* Styles pour l'objet 3D - Cube avec pointes arrondies */
+        .cube {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 80px; /* Taille réduite */
+            height: 80px;
+            transform-style: preserve-3d;
+            animation: rotate 8s infinite linear; /* Animation de rotation */
+            transform: perspective(600px); /* Ajout de la perspective pour un effet 3D */
+            transition: transform 0.5s; /* Transition fluide */
+        }
+
+        .cube-face {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: 15px; /* Coins arrondis */
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); /* Ombre prononcée */
+            background: rgba(255, 165, 0, 0.8); /* Couleur par défaut */
+            display: flex; /* Pour centrer le logo */
+            justify-content: center; /* Centre horizontalement */
+            align-items: center; /* Centre verticalement */
+            transition: transform 0.5s; /* Transition pour les effets 3D */
+        }
+
+        .front  { 
+            transform: translateZ(40px); 
+            background: linear-gradient(45deg, #ff6f20, #ffcc00); /* Dégradé pour la face avant */
+        }
+        .back   { 
+            transform: rotateY(180deg) translateZ(40px); 
+            background: linear-gradient(45deg, #28a745, #5cb85c); /* Dégradé vert pour la face arrière */
+        }
+        .right  { 
+            transform: rotateY(90deg) translateZ(40px); 
+            background: linear-gradient(45deg, #007bff, #00aaff); /* Dégradé bleu pour la face droite */
+        }
+        .left   { 
+            transform: rotateY(-90deg) translateZ(40px); 
+            background: linear-gradient(45deg, #ffcc00, #ffcc00); /* Dégradé jaune pour la face gauche */
+        }
+        .top    { 
+            transform: rotateX(90deg) translateZ(40px); 
+            background: linear-gradient(45deg, #ff6f20, #ffcc00); /* Dégradé orange pour la face supérieure */
+        }
+        .bottom { 
+            transform: rotateX(-90deg) translateZ(40px); 
+            background: linear-gradient(45deg, #28a745, #5cb85c); /* Dégradé vert pour la face inférieure */
+        }
+
+        @keyframes rotate {
+            0% { transform: rotateX(0) rotateY(0); }
+            50% { transform: rotateX(360deg) rotateY(180deg); } /* Rotation plus dynamique */
+            100% { transform: rotateX(720deg) rotateY(360deg); } /* Rotation finale */
+        }
+
+        nav {
+            background-color: #ffcc00; /* Jaune vif pour la navigation */
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s;
+        }
+
+        /* Reste du CSS pour votre page... */
+
+
+
+
+
+
+
+
+
+
+        font-family: 'Comic Neue', cursive; /* Police de style cartoon */
+        background-color: #f0f8ff; /* Fond bleu clair */
+        color: #333; /* Couleur de texte sombre */
+        margin: 0;
+        padding: 20px;
+        transition: background-color 0.3s; /* Animation de fond */
+    }
+
+    nav {
+        background-color: #ffcc00; /* Jaune vif pour la navigation */
+        padding: 15px;
+        border-radius: 15px; /* Coins arrondis prononcés */
+        margin-bottom: 20px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* Ombre prononcée */
+        transition: transform 0.2s; /* Animation de transformation */
+    }
+
+    nav:hover {
+        transform: translateY(-2px); /* Légère élévation au survol */
+    }
+
+    nav a {
+        color: #333; /* Couleur de texte sombre */
+        text-decoration: none;
+        margin-right: 20px;
+        font-weight: bold;
+        position: relative;
+        transition: color 0.3s; /* Animation de couleur */
+    }
+
+    nav a:hover {
+        color: #ff6f20; /* Couleur d'accentuation au survol */
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Ombre au survol */
+    }
+
+    h1 {
+        color: #ff6f20; /* Titre orange vif */
+        margin-bottom: 30px;
+        text-align: center;
+        font-weight: bold;
+        font-size: 3em; /* Taille augmentée pour le titre */
+        text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4); /* Ombre prononcée pour le titre */
+        transition: transform 0.3s; /* Animation pour le titre */
+    }
+
+    h1:hover {
+        transform: rotate(-3deg); /* Légère rotation au survol */
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* Ombre profonde pour le tableau */
+        border-radius: 15px; /* Coins arrondis prononcés */
+        overflow: hidden; /* Pour masquer les coins arrondis */
+        transition: transform 0.3s; /* Animation pour le tableau */
+    }
+
+    table:hover {
+        transform: scale(1.02); /* Agrandissement au survol */
+    }
+
+    th, td {
+        padding: 15px;
+        border: 2px solid #ffcc00; /* Bordure jaune vif */
+        text-align: left;
+        transition: background-color 0.3s; /* Animation de couleur de fond */
+        background-color: #fff5e6; /* Fond clair pour les cellules */
+    }
+
+    th {
+        background-color: #ff6f20; /* Couleur orange pour l'en-tête */
+        color: white;
+        font-weight: bold;
+        text-transform: uppercase; /* Majuscules pour les en-têtes */
+    }
+
+    tr:nth-child(even) {
+        background-color: #ffe6cc; /* Couleur de fond pour les lignes paires */
+    }
+
+    tr:hover {
+        background-color: #ffe0b2; /* Couleur au survol des lignes */
+        transform: scale(1.02); /* Agrandissement au survol */
+    }
+
+    /* Style pour le formulaire de recherche */
+    form {
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: center;
+        animation: fadeIn 0.8s; /* Animation d'apparition */
+    }
+
+    form input[type="text"] {
+        padding: 10px;
+        border: 2px solid #ffcc00; /* Bordure jaune vif */
+        border-radius: 10px; /* Coins arrondis */
+        width: 300px; /* Largeur du champ de recherche */
+        margin-right: 10px;
+        transition: border-color 0.3s; /* Animation de couleur de bordure */
+    }
+
+    form input[type="text"]:focus {
+        border-color: #ff6f20; /* Bordure orange au focus */
+        outline: none; /* Suppression de l'outline par défaut */
+    }
+
+    form button {
+        padding: 10px 15px;
+        border: none;
+        background-color: #28a745; /* Vert pour le bouton */
+        color: white;
+        border-radius: 10px; /* Coins arrondis */
+        cursor: pointer;
+        transition: background-color 0.3s; /* Animation de couleur */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Ombre pour le bouton */
+    }
+
+    form button:hover {
+        background-color: #218838; /* Couleur d'accentuation au survol du bouton */
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); /* Ombre plus prononcée au survol */
+    }
+
+    /* Animation d'apparition */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Style pour la liste des éléments */
+    ul {
+        list-style-type: none; /* Supprime les puces de la liste */
+        padding: 0;
+    }
+
+    ul li {
+        background-color: #fff; /* Couleur de fond des éléments de la liste */
+        padding: 15px;
+        margin: 10px 0;
+        border-radius: 10px; /* Coins arrondis */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Ombre légère */
+        transition: transform 0.2s; /* Animation de transformation */
+    }
+
+    ul li:hover {
+        transform: translateY(-5px); /* Légère élévation au survol */
+        background-color: #ffe6cc; /* Changement de couleur au survol */
+    }
+
+    ul li a {
+        margin-left: 10px;
+        color: #007bff; /* Couleur des liens */
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    ul li a:hover {
+        text-decoration: underline; /* Soulignement des liens au survol */
+        color: #ff6f20; /* Couleur d'accentuation au survol */
+    }
+    </style>
+</head>
+<body>
+    <div class="cube">
+        <div class="cube-face front">
+        </div>
+        <div class="cube-face back">
+        </div>
+        <div class="cube-face right">
+        </div>
+        <div class="cube-face left">
+        </div>
+        <div class="cube-face top">
+        </div>
+        <div class="cube-face bottom">
+        </div>
+    </div>
+    <nav>
+        <a href="{% url 'home' %}">Acceuil</a>
+        <a href="{% url 'liste_produits' %}">Produits</a>
+        <a href="{% url 'ajouter_produit' %}">Ajouter un Produit</a>
+        <a href="{% url 'liste_categories' %}">Catégories</a>
+        <a href="{% url 'ajouter_categorie' %}">Ajouter une Catégorie</a>
+        <a href="{% url 'traiter_vente' %}">Traiter une Vente</a>
+        <a href="{% url 'tableau_de_bord' %}">Tableau de Bord</a>
+    </nav>
+    <h1>Ajouter un Produit</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Ajouter</button>
+    </form>
+    <a href="{% url 'liste_produits' %}">Retour à la liste</a>
+</body>
+</html>
